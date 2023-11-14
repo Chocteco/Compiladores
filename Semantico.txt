@@ -1,0 +1,115 @@
+-------------------------------------
+Tabla de Simbolos
+-------------------------------------
+Var.	Tipo
+-------------------------------------
+T4	float
+a	float
+T5	int
+b	float
+T6	bool
+c	bool
+T7	bool
+T8	float
+T9	float
+T10	bool
+x	int
+y	int
+T0	bool
+T1	bool
+T2	int
+T3	float
+-------------------------------------
+Program
+|__Declaracion
+|  |__x(int)
+|  |__y(int)
+|__Declaracion
+|  |__a(float)
+|  |__b(float)
+|__Declaracion
+|  |__c(bool)
+|__Asignacion
+|  |__= --> bool
+|     |__c(bool)
+|     |__false(bool)
+|__Asignacion
+|  |__= --> int
+|     |__x(int)
+|     |__5(int)
+|__Asignacion
+|  |__= --> int
+|     |__y(int)
+|     |__4(int)
+|__Asignacion
+|  |__= --> float
+|     |__a(float)
+|     |__0.0(float)
+|__Asignacion
+|  |__= --> float
+|     |__b(float)
+|     |__3.0(float)
+|__do
+|  |__if
+|     |__< --> bool T0
+|        |__x(int)
+|        |__y(int)
+|     |__and
+|        |__>= --> bool T1
+|           |__y(int)
+|           |__0(int)
+|     |__then
+|     |__Asignacion
+|        |__= --> bool
+|           |__c(bool)
+|           |__true(bool)
+|     |__else
+|        |__Asignacion
+|           |__= --> int
+|              |__x(int)
+|              |__- --> int T2
+|                 |__x(int)
+|                 |__2(int)
+|        |__Asignacion
+|           |__= --> float
+|              |__a(float)
+|              |__+ --> float T4
+|                 |__* --> float T3
+|                    |__a(float)
+|                    |__x(int)
+|                 |__b(float)
+|        |__Asignacion
+|           |__= --> int
+|              |__y(int)
+|              |__- --> int T5
+|                 |__y(int)
+|                 |__1(int)
+|     |__fi
+|  |__while
+|     |__== --> bool T6
+|        |__a(float)
+|        |__3(int)
+|     |__or
+|        |__== --> bool T7
+|           |__x(int)
+|           |__y(int)
+|     |__then
+|     |__write
+|        |__a(float)
+|     |__Asignacion
+|        |__= --> float
+|           |__a(float)
+|           |__+ --> float T8
+|              |__a(float)
+|              |__1(int)
+|     |__Asignacion
+|        |__= --> ERROR SEMANTICO
+|           |__x(int)
+|           |__- --> float T9
+|              |__a(float)
+|              |__y(int)
+|     |__endWhile
+|  |__until
+|  |__== --> bool T10
+|     |__c(bool)
+|     |__true(bool)

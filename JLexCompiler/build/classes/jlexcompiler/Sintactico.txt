@@ -1,0 +1,94 @@
+Analisis sintactico realizado correctamente
+Program
+|__Declaracion
+|  |__x
+|  |__y
+|__Declaracion
+|  |__a
+|  |__b
+|__Declaracion
+|  |__c
+|__Asignacion
+|  |__=
+|     |__c
+|     |__false
+|__Asignacion
+|  |__=
+|     |__x
+|     |__5
+|__Asignacion
+|  |__=
+|     |__y
+|     |__4
+|__Asignacion
+|  |__=
+|     |__a
+|     |__0.0
+|__Asignacion
+|  |__=
+|     |__b
+|     |__3.0
+|__do
+|  |__if
+|     |__<
+|        |__x
+|        |__y
+|     |__and
+|        |__>=
+|           |__y
+|           |__0
+|     |__then
+|     |__Asignacion
+|        |__=
+|           |__c
+|           |__true
+|     |__else
+|        |__Asignacion
+|           |__=
+|              |__x
+|              |__-
+|                 |__x
+|                 |__2
+|        |__Asignacion
+|           |__=
+|              |__a
+|              |__+
+|                 |__*
+|                    |__a
+|                    |__x
+|                 |__b
+|        |__Asignacion
+|           |__=
+|              |__y
+|              |__-
+|                 |__y
+|                 |__1
+|     |__fi
+|  |__while
+|     |__==
+|        |__a
+|        |__3
+|     |__or
+|        |__==
+|           |__x
+|           |__y
+|     |__then
+|     |__write
+|        |__a
+|     |__Asignacion
+|        |__=
+|           |__a
+|           |__+
+|              |__a
+|              |__1
+|     |__Asignacion
+|        |__=
+|           |__x
+|           |__-
+|              |__a
+|              |__y
+|     |__endWhile
+|  |__until
+|  |__==
+|     |__c
+|     |__true

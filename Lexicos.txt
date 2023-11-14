@@ -1,0 +1,118 @@
+1	program	Es una palabra Reservada	1	1
+2	{	Es un caracter especial (Abre_llave)	1	9
+3	int	Es una palabra Reservada	2	2
+4	x	Es un Identificador	2	6
+5	,	Es un caracter especial (Coma)	2	7
+6	y	Es un Identificador	2	9
+7	;	Es un caracter especial (Punto_y_coma)	2	10
+8	float	Es una palabra Reservada	3	2
+9	a	Es un Identificador	3	8
+10	,	Es un caracter especial (Coma)	3	9
+11	b	Es un Identificador	3	11
+12	;	Es un caracter especial (Punto_y_coma)	3	12
+13	bool	Es una palabra Reservada	4	2
+14	c	Es un Identificador	4	7
+15	;	Es un caracter especial (Punto_y_coma)	4	8
+16	c	Es un Identificador	5	3
+17	=	Es un operador (Igual)	5	5
+18	false	Es un Identificador	5	6
+19	;	Es un caracter especial (Punto_y_coma)	5	11
+20	x	Es un Identificador	6	3
+21	=	Es un operador (Igual)	6	4
+22	5	Es un Numero	6	5
+23	;	Es un caracter especial (Punto_y_coma)	6	6
+24	// comentario 1	Es un Comentario	6	8
+25	y	Es un Identificador	7	3
+26	=	Es un operador (Igual)	7	4
+27	4	Es un Numero	7	5
+28	;	Es un caracter especial (Punto_y_coma)	7	6
+29	/* comentario 2 */	Es un Comentario	7	8
+30	a	Es un Identificador	8	3
+31	=	Es un operador (Igual)	8	4
+32	0.0	Es un Numero	8	5
+33	;	Es un caracter especial (Punto_y_coma)	8	8
+34	b	Es un Identificador	9	3
+35	=	Es un operador (Igual)	9	4
+36	3.0	Es un Numero	9	5
+37	;	Es un caracter especial (Punto_y_coma)	9	8
+38	do	Es una palabra Reservada	10	2
+39	{	Es un caracter especial (Abre_llave)	10	5
+40	if	Es una palabra Reservada	11	4
+41	(	Es un caracter especial (Abre_parentesis)	11	6
+42	x	Es un Identificador	11	8
+43	<	Es un comparador (Menor_que)	11	9
+44	y	Es un Identificador	11	11
+45	and	Es una palabra Reservada	11	13
+46	y	Es un Identificador	11	18
+47	>=	Es un comparador (Mayor_o_igual)	11	19
+48	0	Es un Numero	11	21
+49	)	Es un caracter especial (Cierra_parentesis)	11	22
+50	then	Es un Identificador	11	23
+51	{	Es un caracter especial (Abre_llave)	11	27
+52	c	Es un Identificador	12	7
+53	=	Es un operador (Igual)	12	8
+54	true	Es un Identificador	12	9
+55	;	Es un caracter especial (Punto_y_coma)	12	13
+56	}	Es un caracter especial (Cierra_llave)	13	4
+57	else	Es una palabra Reservada	13	6
+58	{	Es un caracter especial (Abre_llave)	13	11
+59	x	Es un Identificador	14	5
+60	=	Es un operador (Igual)	14	6
+61	x	Es un Identificador	14	8
+62	-	Es un operador (Resta)	14	9
+63	2	Es un Numero	14	10
+64	;	Es un caracter especial (Punto_y_coma)	14	11
+65	a	Es un Identificador	15	5
+66	=	Es un operador (Igual)	15	6
+67	a	Es un Identificador	15	8
+68	*	Es un operador (Multiplicacion)	15	9
+69	x	Es un Identificador	15	11
+70	+	Es un operador (Suma)	15	12
+71	b	Es un Identificador	15	14
+72	;	Es un caracter especial (Punto_y_coma)	15	15
+73	y	Es un Identificador	16	5
+74	=	Es un operador (Igual)	16	6
+75	y	Es un Identificador	16	8
+76	-	Es un operador (Resta)	16	9
+77	1	Es un Numero	16	10
+78	;	Es un caracter especial (Punto_y_coma)	16	11
+79	}	Es un caracter especial (Cierra_llave)	17	3
+80	fi	Es una palabra Reservada	18	3
+81	while	Es una palabra Reservada	19	2
+82	(	Es un caracter especial (Abre_parentesis)	19	7
+83	a	Es un Identificador	19	9
+84	==	Es un comparador (Igual_que)	19	10
+85	3	Es un Numero	19	12
+86	or	Es una palabra Reservada	19	16
+87	x	Es un Identificador	19	20
+88	==	Es un comparador (Igual_que)	19	21
+89	y	Es un Identificador	19	24
+90	)	Es un caracter especial (Cierra_parentesis)	19	25
+91	{	Es un caracter especial (Abre_llave)	19	26
+92	write	Es una palabra Reservada	20	3
+93	a	Es un Identificador	20	9
+94	;	Es un caracter especial (Punto_y_coma)	20	10
+95	a	Es un Identificador	21	4
+96	=	Es un operador (Igual)	21	5
+97	a	Es un Identificador	21	7
+98	+	Es un operador (Suma)	21	8
+99	1	Es un Numero	21	9
+100	;	Es un caracter especial (Punto_y_coma)	21	10
+101	x	Es un Identificador	22	4
+102	=	Es un operador (Igual)	22	5
+103	a	Es un Identificador	22	7
+104	-	Es un operador (Resta)	22	8
+105	y	Es un Identificador	22	10
+106	;	Es un caracter especial (Punto_y_coma)	22	11
+107	}	Es un caracter especial (Cierra_llave)	23	3
+108	}	Es un caracter especial (Cierra_llave)	24	2
+109	until	Es una palabra Reservada	24	3
+110	(	Es un caracter especial (Abre_parentesis)	24	8
+111	c	Es un Identificador	24	10
+112	==	Es un comparador (Igual_que)	24	12
+113	(	Es un caracter especial (Abre_parentesis)	24	15
+114	true	Es un Identificador	24	16
+115	)	Es un caracter especial (Cierra_parentesis)	24	20
+116	)	Es un caracter especial (Cierra_parentesis)	24	21
+117	;	Es un caracter especial (Punto_y_coma)	24	22
+118	}	Es un caracter especial (Cierra_llave)	25	1

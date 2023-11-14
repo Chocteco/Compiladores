@@ -1,0 +1,575 @@
+package jlexcompiler;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:  
+    public String resultado="";
+    public Nodo padre;
+    public int contador = 1;
+
+    private Symbol s;
+    @Override
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+    }
+:};
+
+terminal Program, Abre_llave, Cierra_llave, Punto_y_coma,
+    Int, Float, Bool, Identificador, Coma, Abre_parentesis, Cierra_parentesis, 
+    If, Then, Else, Fi, While, Do, Until, Read, Write, Or, And, True, False,
+    Menor_o_igual, Menor_que, Mayor_que, Mayor_o_igual, Igual, Igual_que, Diferente_que,
+    Suma, Resta, Multiplicacion, Division, Not, Numero, Potencia, Comentario, ERROR;
+non terminal Inicio, Lista_declaracion, Lista_sentencias, Declaracion, Tipo, 
+    Lista_id, Sentencias, Seleccion, Iteracion, Repeticion, Sent_read, 
+    Sent_write, Bloque, Asignacion, B_expresion, B_term, Not_factor,
+    B_factor, Relacion, Expresion, RelOp, Termino, SumaOp, SignoFactor, MultOp,
+    Factor, Bool_value, Comentarios, C_expresion, C_Term, Not_list, Relacion_2,
+    Expresion_2, Termino_2, Else_block, Lista_id_2;
+
+start with Inicio;
+
+Inicio ::= 
+    Program Abre_llave Lista_declaracion:listaD Lista_sentencias:listaS Cierra_llave 
+{:
+    Nodo tmp = new Nodo("Program");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)listaD);
+    tmp.addHijo((Nodo)listaS);
+    System.out.println("OK");
+    RESULT=tmp;
+:}
+;
+
+Lista_declaracion ::=
+    Declaracion:decl Lista_declaracion:listaD
+{:
+    Nodo tmp = new Nodo("Lista_declaracion");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)decl);
+    tmp.addHijo((Nodo)listaD);
+    RESULT=tmp;
+:} 
+|
+    '\0'
+;
+Declaracion ::=
+    Tipo:tipo Lista_id:listaI Punto_y_coma Comentarios
+{:
+    Nodo tmp = new Nodo("Declaracion");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)tipo);
+    tmp.addHijo((Nodo)listaI);
+    RESULT=tmp;
+:} 
+;
+Tipo ::=
+    Int:entero
+{:
+    Nodo tmp = new Nodo("int");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    RESULT=tmp;
+:} | Float:flotante
+{:
+    Nodo tmp = new Nodo("float");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    RESULT=tmp;
+:} | Bool:boleano
+{:
+    Nodo tmp = new Nodo("bool");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    RESULT=tmp;
+:}
+;
+Lista_id ::= 
+    Identificador:ident Lista_id_2:listI2
+{:
+    Nodo tmp = new Nodo("Lista_id");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo(new Nodo(ident.toString(),true));
+    tmp.addHijo((Nodo)listI2);
+    RESULT=tmp;
+:}
+;
+Lista_id_2 ::= |
+    Coma Identificador:ident Lista_id_2:listI2
+{:
+    Nodo tmp = new Nodo("Lista_id_2");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo(new Nodo(ident.toString(),true));
+    tmp.addHijo((Nodo)listI2);
+    RESULT=tmp;
+:}
+;
+
+Lista_sentencias ::= 
+    Sentencias:sent Lista_sentencias:listS
+{:
+    Nodo tmp = new Nodo("Lista_sentencias");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)sent);
+    tmp.addHijo((Nodo)listS);
+    RESULT=tmp;
+:}  | '\0'
+;
+Sentencias ::= 
+    Seleccion:sele
+{:
+    Nodo tmp = new Nodo("Seleccion");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)sele);
+    RESULT=tmp;
+:} | Iteracion:iter
+{:
+    Nodo tmp = new Nodo("Sentencias");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)iter);
+    RESULT=tmp;
+:} | Repeticion:repe
+{:
+    Nodo tmp = new Nodo("Sentencias");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)repe);
+    RESULT=tmp;
+:} | Sent_read:sentR
+{:
+    Nodo tmp = new Nodo("Sentencias");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)sentR);
+    RESULT=tmp;
+:} | Sent_write:sentW
+{:
+    Nodo tmp = new Nodo("Sentencias");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)sentW);
+    RESULT=tmp;
+:} | Bloque:bloq
+{:
+    Nodo tmp = new Nodo("Sentencias");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)bloq);
+    RESULT=tmp;
+:} | Asignacion:asig
+{:
+    Nodo tmp = new Nodo("Asignacion");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)asig);
+    RESULT=tmp;
+:}
+;
+
+Seleccion ::=
+    If:_if Abre_parentesis:abreP B_expresion:Bexp Cierra_parentesis:cierraP Then:_then Bloque:bloq Else_block:elseB Fi:_fi
+{:
+    Nodo tmp = new Nodo(_if.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo(new Nodo(abreP.toString()));
+    tmp.addHijo((Nodo)Bexp);
+    tmp.addHijo(new Nodo(cierraP.toString()));
+    tmp.addHijo(new Nodo(_then.toString()));
+    tmp.addHijo((Nodo)bloq);
+    tmp.addHijo((Nodo)elseB);    
+    tmp.addHijo(new Nodo(_fi.toString()));
+    RESULT=tmp;
+:}
+;
+Else_block ::= |
+    Else:_else Bloque:bloq
+{:
+    Nodo tmp = new Nodo(_else.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)bloq);
+    RESULT=tmp;
+:}
+;
+Iteracion ::=
+    While:_while Abre_parentesis:abreP B_expresion:Bexp Cierra_parentesis:cierraP Bloque:bloq
+{:
+    Nodo tmp = new Nodo(_while.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo(new Nodo(abreP.toString()));
+    tmp.addHijo((Nodo)Bexp);
+    tmp.addHijo(new Nodo(cierraP.toString()));
+    tmp.addHijo(new Nodo("then"));
+    tmp.addHijo((Nodo)bloq);
+    tmp.addHijo(new Nodo("endWhile"));
+    RESULT=tmp;
+:}
+;
+Repeticion ::=
+    Do:_do Bloque:bloq Until:_until Abre_parentesis:abreP B_expresion:Bexp Cierra_parentesis:cierraP Punto_y_coma:pyc Comentarios
+{:
+    Nodo tmp = new Nodo(_do.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)bloq);
+    tmp.addHijo(new Nodo(_until.toString()));
+    tmp.addHijo(new Nodo(abreP.toString()));
+    tmp.addHijo((Nodo)Bexp);
+    tmp.addHijo(new Nodo(cierraP.toString()));
+    tmp.addHijo(new Nodo(pyc.toString()));
+    RESULT=tmp;
+:}
+;
+Sent_read ::=
+    Read:_read Identificador:ident Punto_y_coma:pyc Comentarios
+{:
+    Nodo tmp = new Nodo(_read.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo(new Nodo(ident.toString(),false,true));
+    tmp.addHijo(new Nodo(pyc.toString()));
+    RESULT=tmp;
+:}
+;
+Sent_write ::=
+    Write:_write B_expresion:Bexp Punto_y_coma:pyc Comentarios
+{:
+    Nodo tmp = new Nodo(_write.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)Bexp);
+    tmp.addHijo(new Nodo(pyc.toString()));
+    RESULT=tmp;
+:}
+;
+Bloque ::=
+    Abre_llave:abreL Lista_sentencias:listS Cierra_llave:cierraL
+{:
+    Nodo tmp = new Nodo("Bloque");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo(new Nodo(abreL.toString()));
+    tmp.addHijo((Nodo)listS);
+    tmp.addHijo(new Nodo(cierraL.toString()));
+    RESULT=tmp;
+:}
+;
+Asignacion ::=
+    Identificador:ident Igual:_igual B_expresion:Bexp Punto_y_coma:pyc Comentarios
+{:
+    Nodo tmp = new Nodo(_igual.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo(new Nodo(ident.toString(),false,true));
+    tmp.addHijo((Nodo)Bexp);
+    tmp.addHijo(new Nodo(pyc.toString()));
+    RESULT=tmp;
+:}
+;
+
+B_expresion ::=
+    B_term:Bterm C_expresion:Cexp
+{:
+    Nodo tmp = new Nodo("B_expresion");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)Bterm);
+    tmp.addHijo((Nodo)Cexp);
+    RESULT=tmp;
+:}
+;
+C_expresion ::= |
+    Or:_or B_term:Bterm C_expresion:Cexp
+{:
+    Nodo tmp = new Nodo(_or.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)Bterm);
+    tmp.addHijo((Nodo)Cexp);
+    RESULT=tmp;
+:}
+;
+B_term ::=
+    Not_factor:nFact C_Term:Cterm
+{:
+    Nodo tmp = new Nodo("B_term");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)nFact);
+    tmp.addHijo((Nodo)Cterm);
+    RESULT=tmp;
+:}
+;
+C_Term ::= |
+   And:_and Not_factor:nFact C_Term:Cterm
+{:
+    Nodo tmp = new Nodo(_and.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)nFact);
+    tmp.addHijo((Nodo)Cterm);
+    RESULT=tmp;
+:}
+;
+Not_factor ::=
+    Not_list:nList B_factor:Bfact
+{:
+    Nodo tmp = new Nodo("Not_factor");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)nList);
+    tmp.addHijo((Nodo)Bfact);
+    RESULT=tmp;
+:}
+;
+Not_list ::= |
+    Not:_not Not_list:nList
+{:
+    Nodo tmp = new Nodo(_not.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)nList);
+    RESULT=tmp;
+:}
+;
+B_factor ::=
+    Bool_value:boolV
+{:
+    Nodo tmp = new Nodo("B_factor");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)boolV);
+    RESULT=tmp;
+:} | Relacion:rela
+{:
+    Nodo tmp = new Nodo("Relacion");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)rela);
+    RESULT=tmp;
+:}
+;
+Bool_value ::=
+    True:_true
+{:
+    Nodo tmp = new Nodo("boolean");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.setValor(_true.toString());
+    RESULT=tmp;
+:}
+   | False:_false
+{:
+    Nodo tmp = new Nodo("boolean");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.setValor(_false.toString());
+    RESULT=tmp;
+:}
+;
+
+Relacion ::=
+    Expresion:exp Relacion_2:rel2
+{:
+    Nodo tmp = new Nodo("Relacion");
+    if(((Nodo)rel2)!=null)
+        tmp = new Nodo(((Nodo)rel2).getNombre());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)exp);
+    if(((Nodo)rel2)!=null)
+        tmp.addHijos(((Nodo)rel2).getHijos());
+    RESULT=tmp;
+:}
+;
+Relacion_2 ::= |
+    RelOp:relO Expresion:exp Relacion_2:rel2
+{:
+    Nodo tmp = new Nodo(((Nodo)relO).getNombre());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)exp);
+    tmp.addHijo((Nodo)rel2);
+    RESULT=tmp;
+:}
+;
+RelOp ::=
+    Menor_o_igual:menorIgual
+{:
+    Nodo tmp = new Nodo(menorIgual.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    RESULT=tmp;
+:}
+    | Menor_que:menorQ
+{:
+    Nodo tmp = new Nodo(menorQ.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    RESULT=tmp;
+:}  | Mayor_que:mayorQ
+{:
+    Nodo tmp = new Nodo(mayorQ.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    RESULT=tmp;
+:} | Mayor_o_igual:mayorIgual
+{:
+    Nodo tmp = new Nodo(mayorIgual.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    RESULT=tmp;
+:}  | Igual_que:igualQ
+{:
+    Nodo tmp = new Nodo(igualQ.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    RESULT=tmp;
+:} | Diferente_que:difQ
+{:
+    Nodo tmp = new Nodo(difQ.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    RESULT=tmp;
+:} 
+;
+Expresion ::=
+    Termino:term Expresion_2:exp2
+{:
+    Nodo tmp = new Nodo("Expresion");
+    if(((Nodo)exp2)!=null)
+        tmp = new Nodo(((Nodo)exp2).getNombre());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)term);
+    if(((Nodo)exp2)!=null)
+        tmp.addHijos(((Nodo)exp2).getHijos());
+    RESULT=tmp;
+:}
+;
+Expresion_2 ::= |
+    SumaOp:sumO Termino:term Expresion_2:exp2
+{:
+    Nodo tmp = new Nodo(((Nodo)sumO).getNombre());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)term);
+    tmp.addHijo((Nodo)exp2);
+    RESULT=tmp;
+:}
+;
+Termino  ::=
+    SignoFactor:signF Termino_2:term2
+{:
+    Nodo tmp = new Nodo("Termino");
+    if(((Nodo)term2)!=null)
+        tmp = new Nodo(((Nodo)term2).getNombre());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)signF);
+    if(((Nodo)term2)!=null)
+        tmp.addHijos(((Nodo)term2).getHijos());
+    RESULT=tmp;
+:}
+;
+Termino_2 ::= |
+    MultOp:multO SignoFactor:signF Termino_2:term2
+{:
+    Nodo tmp = new Nodo(((Nodo)multO).getNombre());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)signF);
+    tmp.addHijo((Nodo)term2);
+    RESULT=tmp;
+:}
+;
+MultOp ::=
+    Multiplicacion:mult
+{:
+    Nodo tmp = new Nodo(mult.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    RESULT=tmp;
+:} | Division:div
+{:
+    Nodo tmp = new Nodo(div.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    RESULT=tmp;
+:}
+;
+SignoFactor ::=
+    SumaOp:sumO Factor:fact
+{:
+    Nodo tmp = new Nodo("SignoFactor");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)sumO);
+    tmp.addHijo((Nodo)fact);
+    RESULT=tmp;
+:} | Factor:fact
+{:
+    Nodo tmp = new Nodo("SignoFactor");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo((Nodo)fact);
+    RESULT=tmp;
+:}
+;
+
+SumaOp ::=
+    Suma:sum
+{:
+    Nodo tmp = new Nodo(sum.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    RESULT=tmp;
+:} | Resta:rest
+{:
+    Nodo tmp = new Nodo(rest.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    RESULT=tmp;
+:}
+;
+Factor ::=
+    Abre_parentesis:abreP B_expresion:Bexp Cierra_parentesis:cierraP
+{:
+    Nodo tmp = new Nodo("Factor");
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.addHijo(new Nodo(abreP.toString()));
+    tmp.addHijo((Nodo)Bexp);
+    tmp.addHijo(new Nodo(cierraP.toString()));
+    RESULT=tmp;
+:} | Numero:num
+{:  Nodo tmp = new Nodo(num.toString());
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    tmp.setValor(num.toString());
+    RESULT=tmp;
+:} | Identificador:ident
+{:  Nodo tmp = new Nodo(ident.toString(),false,true);
+    tmp.setNumNodo(parser.contador++);
+    parser.padre = (Nodo) tmp;
+    RESULT=tmp;
+:}
+;
+Comentarios ::=
+    Comentario  |
+    '\0'
+;

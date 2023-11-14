@@ -1,0 +1,72 @@
+Program
+|__Declaracion
+|  |__x(int)
+|  |__y(int)
+|  |__x ---> El identificador ya ha sido declarado anteriormente
+|__Declaracion
+|  |__a(float)
+|  |__b(float)
+|__Asignacion
+|  |__=
+|     |__x(int)
+|     |__5
+|__Asignacion
+|  |__=
+|     |__y(int)
+|     |__4
+|__Asignacion
+|  |__=
+|     |__a(float)
+|     |__0.0
+|__Asignacion
+|  |__=
+|     |__b(float)
+|     |__3.0
+|__do
+|  |__Bloque
+|     |__if
+|        |__<
+|           |__x(int)
+|           |__y(int)
+|        |__then
+|        |__Bloque
+|           |__Asignacion
+|              |__=
+|                 |__y(int)
+|                 |__-
+|                    |__y(int)
+|                    |__1
+|        |__else
+|           |__Bloque
+|              |__Asignacion
+|                 |__=
+|                    |__x(int)
+|                    |__-
+|                       |__x(int)
+|                       |__2
+|              |__Asignacion
+|                 |__=
+|                    |__a(float)
+|                    |__+
+|                       |__*
+|                          |__a(float)
+|                          |__x(int)
+|                       |__b(float)
+|              |__Asignacion
+|                 |__=
+|                    |__y(int)
+|                    |__-
+|                       |__z ---> El identificador "z" no ha sido declarado...
+|                       |__1
+|        |__fi
+|     |__while
+|        |__==
+|           |__a(float)
+|           |__3
+|        |__Bloque
+|           |__write
+|              |__a(float)
+|  |__until
+|  |__>=
+|     |__y(int)
+|     |__0

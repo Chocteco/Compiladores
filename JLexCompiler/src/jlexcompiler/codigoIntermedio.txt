@@ -1,0 +1,37 @@
+int x
+int y
+float a
+float b
+bool c
+c=0
+x=5
+y=4
+a=0.0
+b=3.0
+L1: if x<y goto L2
+goto L3
+L2: if y>=0 goto L4
+goto L3
+L4: c=1
+goto L6
+L3: T1 = x-2
+x = T1
+T2 = a*x
+T3 = T2+b
+a = T3
+T4 = y-1
+y = T4
+L6:
+L7:if a==3 goto L8
+goto L9
+L9: if x==y goto L8
+goto L10
+L8: write a
+T5 = a+1
+a = T5
+x = a-y
+goto L7
+L10:
+if c==1 goto L1
+goto L11
+L11:
